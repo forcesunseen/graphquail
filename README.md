@@ -49,6 +49,8 @@ This is handy when the GraphQL endpoint doesn't have introspection enabled. If y
 
 At any point you can reset the schema or copy it in JSON or SDL format.
 
+If you are interested in the implementation and a demo you can read more about this feature on our [blog](https://blog.forcesunseen.com/graphql-security-testing-without-a-schema).
+
 ## Building
 
 Run `gradle build` and JAR will be generated and saved in `releases/`
