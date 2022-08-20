@@ -5,6 +5,9 @@ plugins {
 group 'com.forcesunseen'
 version '0.1'
 
+targetCompatibility = '1.15'
+sourceCompatibility = '1.15'
+
 repositories {
     mavenCentral()
     maven {
