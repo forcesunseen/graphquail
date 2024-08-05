@@ -227,20 +227,11 @@ public class BurpExtender implements IBurpExtender, ITab, ActionListener {
                             if (path.endsWith("/" + pathEmulator.getGraphiqlPath()) || path.endsWith("/" + pathEmulator.getVoyagerPath())) {
 
                                 // First check if introspection is disabled, change to real path if it is
-                                if (!introspectionEmulator.isEnabled()) {
+                                // Or if introspection is enabled, only change to real paths when it's not an introspection query
+                                if (!introspectionEmulator.isEnabled() || !body.contains("__schema")) {
                                     String modifiedPath = headers.get(0).replace("/" + pathEmulator.getGraphiqlPath(), "");
                                     modifiedPath = modifiedPath.replace("/" + pathEmulator.getVoyagerPath(), "");
-                                    headers.set(0, modifiedPath);
-                                    headers.addAll(introspectionEmulator.getCustomHeaders());
-
-                                    byte[] customRequest = extenderHelpers.buildHttpMessage(headers, body.getBytes());
-                                    messageInfo.setRequest(customRequest);
-                                }
-
-                                // Since we know introspection is enabled, only change to real paths when it's not an introspection query
-                                else if (!body.contains("__schema")) {
-                                    String modifiedPath = headers.get(0).replace("/" + pathEmulator.getGraphiqlPath(), "");
-                                    modifiedPath = modifiedPath.replace("/" + pathEmulator.getVoyagerPath(), "");
+                                    modifiedPath = modifiedPath.replace("  ", " / ");
                                     headers.set(0, modifiedPath);
                                     headers.addAll(introspectionEmulator.getCustomHeaders());
 
